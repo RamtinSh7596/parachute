@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from file_reader import search, get_docs
+from file_reader import reader
 
 app = Flask(__name__)
 CORS(app)
@@ -9,7 +9,7 @@ CORS(app)
 @app.route('/')
 def query():
     q = request.args.get('q')
-    docs = get_docs(search(q))
+    docs = reader.search(q)
     results = [{
         'publish_date': doc.publish_date,
         'title': doc.title,
@@ -19,11 +19,11 @@ def query():
         'content': doc.content,
         # 'thumbnail': doc.thumbnail,
     } for doc in docs]
-    print("<span style='font-weight: bold'>{0}</span>".format("The Text"))
+    # print("<span style='font-weight: bold'>{0}</span>".format("The Text"))
     print(len(results), "results found")
     return jsonify({
-        "q": q,
-        "result": results
+        "query": q,
+        "result": results,
     })
 
 
