@@ -3,8 +3,6 @@ from reader.dictionary import Dictionary
 from reader.cleaner import Cleaner
 from tokenizing import Tokenizer
 
-cleaner = Cleaner()
-
 
 class FileReader:
     def __init__(self, path, matches_path):
@@ -12,9 +10,12 @@ class FileReader:
         self.articles = []
         self.dict = Dictionary()
         self.tokenizer = Tokenizer(matches_path)
+        self.cleaner = Cleaner()
         for article in sheet.itertuples(True, 'Article'):
             self.articles.append(article)
-            text = cleaner.clean(article.content)
+            text = self.cleaner.clean(str(article.title))
+            text += self.cleaner.clean(str(article.summary))
+            text += self.cleaner.clean(str(article.content))
             tokens = self.tokenizer.tokenize(text)
             pos = 0
             for token in tokens:
@@ -41,7 +42,7 @@ class FileReader:
             final = final.intersection(set(res[i]))
         for n in res_not:
             final = final - set(n)
-        return self.get(final)
+        return self.get(final), query_tokens
 
 
 if __name__ == '__main__':
