@@ -13,13 +13,8 @@ class Tokenizer:
     def tokenize(self, text):
         normal_text = self.normalizer.affix_spacing(text)
         tokens = re.split(' |-|\\?|\\.|\n|\\؟', normal_text)
-        # TODO remove!!!
-        while True:
-            if '' in tokens:
-                tokens.remove('')
-                break
+        tokens = filter(lambda x: x != '', tokens)
         for token in tokens:
-            print(token)
             token = self.stemmer.stem(token)
-            token = self.matcher.matches(token)
+            token = self.matcher.check(token)
             yield token

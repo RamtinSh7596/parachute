@@ -7,10 +7,10 @@ class Matcher:
             self.matches = json.load(file)
 
     def check(self, word):
-        for match in self.matches:
-            if word == match:
-                return self.matches[match]
-        return word
+        try:
+            return self.matches[word]
+        except KeyError:
+            return word
 
 
 if __name__ == '__main__':

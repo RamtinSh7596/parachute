@@ -19,7 +19,6 @@ def query():
         'content': doc.content,
         # 'thumbnail': doc.thumbnail,
     } for doc in docs]
-    # print("<span style='font-weight: bold'>{0}</span>".format("The Text"))
     print(len(results), "results found")
     return jsonify({
         "query": q,

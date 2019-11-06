@@ -10,11 +10,6 @@ def clean_html(html):
     return clean
 
 
-def tokenizing(text):  # TODO remove
-    regex = r'["!.،۰,:;&#<=>()+-/%_\n]|&nbsp;|\u200c|[a-zA-Z0-9۰-۹]'
-    return list(filter(lambda x: x != '', re.sub(regex, ' ', text).split(' ')))
-
-
 class FileReader:
     def __init__(self, path):
         self.sheet = pd.read_excel(path)
@@ -26,8 +21,7 @@ class FileReader:
         for article in self.sheet.itertuples(True, 'Article'):
             self.articles.append(article)
             text = clean_html(article.content)
-            # tokens = tokenizer.tokenize(text)
-            tokens = tokenizing(text)  # TODO switch
+            tokens = tokenizer.tokenize(text)
             pos = 0
             for token in tokens:
                 self.dict.add(token, article.Index, pos)
@@ -38,8 +32,7 @@ class FileReader:
             yield self.articles[key]
 
     def search(self, query):
-        # query_tokens = tokenizer.tokenize(query)
-        query_tokens = tokenizing(query)  # TODO switch
+        query_tokens = list(tokenizer.tokenize(query))
         res, res_not = [], []
         i = 0
         while i < len(query_tokens):
