@@ -12,13 +12,10 @@ def clean_html(html):
 
 class FileReader:
     def __init__(self, path):
-        self.sheet = pd.read_excel(path)
+        sheet = pd.read_excel(path)
         self.articles = []
         self.dict = Dictionary()
-        self.make_dict()
-
-    def make_dict(self):
-        for article in self.sheet.itertuples(True, 'Article'):
+        for article in sheet.itertuples(True, 'Article'):
             self.articles.append(article)
             text = clean_html(article.content)
             tokens = tokenizer.tokenize(text)
