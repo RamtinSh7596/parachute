@@ -1,13 +1,13 @@
 import re
-from tokenizer.stemmer import Stemmer
-from tokenizer.matcher import Matcher
-from tokenizer.normalizer import Normalizer
+from tokenizing.stemmer import Stemmer
+from tokenizing.matcher import Matcher
+from tokenizing.normalizer import Normalizer
 
 
 class Tokenizer:
-    def __init__(self):
+    def __init__(self, matches_path):
         self.stemmer = Stemmer()
-        self.matcher = Matcher('./matches.json')
+        self.matcher = Matcher(matches_path)
         self.normalizer = Normalizer()
 
     def tokenize(self, text):
@@ -18,3 +18,8 @@ class Tokenizer:
             token = self.stemmer.stem(token)
             token = self.matcher.check(token)
             yield token
+
+
+if __name__ == '__main__':
+    tokenizer = Tokenizer('../matches.json')
+    print(tokenizer.tokenize("سلام طهران، می خواهیم تست کنیم!"))

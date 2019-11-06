@@ -1,24 +1,21 @@
-import re
 import pandas as pd
-from file_reader.dictionary import Dictionary
-from tokenizer import tokenizer
+from reader.dictionary import Dictionary
+from reader.cleaner import Cleaner
+from tokenizing import Tokenizer
 
-
-def clean_html(html):
-    pattern = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
-    clean = re.sub(pattern, '', html)
-    return clean
+cleaner = Cleaner()
 
 
 class FileReader:
-    def __init__(self, path):
+    def __init__(self, path, matches_path):
         sheet = pd.read_excel(path)
         self.articles = []
         self.dict = Dictionary()
+        self.tokenizer = Tokenizer(matches_path)
         for article in sheet.itertuples(True, 'Article'):
             self.articles.append(article)
-            text = clean_html(article.content)
-            tokens = tokenizer.tokenize(text)
+            text = cleaner.clean(article.content)
+            tokens = self.tokenizer.tokenize(text)
             pos = 0
             for token in tokens:
                 self.dict.add(token, article.Index, pos)
@@ -29,7 +26,7 @@ class FileReader:
             yield self.articles[key]
 
     def search(self, query):
-        query_tokens = list(tokenizer.tokenize(query))
+        query_tokens = list(self.tokenizer.tokenize(query))
         res, res_not = [], []
         i = 0
         while i < len(query_tokens):
@@ -52,5 +49,7 @@ class FileReader:
 
 
 if __name__ == '__main__':
-    file_reader = FileReader('./data/IR-F19-Project01-Input.xlsx')
-    file_reader.search("تست !برای")
+    file_reader = FileReader('../data/IR-F19-Project01-Input.xlsx', '../matches.json')
+    docs = file_reader.search("تست برای")
+    for doc in docs:
+        print(doc)

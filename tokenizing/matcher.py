@@ -14,6 +14,6 @@ class Matcher:
 
 
 if __name__ == '__main__':
-    matcher = Matcher('./matches.json')
+    matcher = Matcher('../matches.json')
     print(matcher.check("طهران"))
     print(matcher.check("تست"))

@@ -31,3 +31,12 @@ class Dictionary:
 
     def save(self):
         pass
+
+
+if __name__ == '__main__':
+    dictionary = Dictionary()
+    dictionary.add('test', 1, 2)
+    dictionary.add('test', 2, 3)
+    dictionary.add('test', 1, 10)
+    print(dictionary.get('test'))
+    print(dictionary.get('test1'))

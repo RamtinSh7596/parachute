@@ -1,9 +1,10 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from file_reader import reader
+from reader import FileReader
 
 app = Flask(__name__)
 CORS(app)
+reader = FileReader('./data/IR-F19-Project01-Input.xlsx', './matches.json')
 
 
 @app.route('/')
