@@ -28,16 +28,12 @@ class FileReader:
     def search(self, query):
         query_tokens = list(self.tokenizer.tokenize(query))
         res, res_not = [], []
-        i = 0
-        while i < len(query_tokens):
-            token = query_tokens[i]
-            if token == '!' and i != len(query_tokens):
-                i += 1
-                token = query_tokens[i]
+        for token in query_tokens:
+            if token[0] == '!' and len(token) > 1:
+                token = token[1:]
                 res_not.append(self.dict.get(token))
             else:
                 res.append(self.dict.get(token))
-            i += 1
         if len(res) == 0:
             return []
         final = set(res[0])
