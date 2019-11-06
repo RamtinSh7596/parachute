@@ -1,6 +1,3 @@
-from tokenizer import stemmer, matcher
-
-
 class Dictionary:
     def __init__(self):
         self.dict = {}
