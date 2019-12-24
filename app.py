@@ -13,7 +13,7 @@ bolder = Bolder()
 def query():
     q = request.args.get('q')
     print("Query:", q)
-    docs, query_tokens = reader.search(q)
+    docs, query_tokens = reader.search(q, 50)
     docs, query_tokens = list(docs), list(query_tokens)
     print("Results:", len(docs))
     items = int(request.args.get('items', 10))
