@@ -5,7 +5,7 @@ from reader import FileReader, Bolder
 
 app = Flask(__name__)
 CORS(app)
-reader = FileReader('./data/IR-F19-Project01-Input.xlsx', './matches.json')
+reader = FileReader('./data/IR-F19-Project01-Input.xlsx', './matches.json', './exceptions.txt')
 bolder = Bolder()
 
 

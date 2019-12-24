@@ -1,10 +1,12 @@
 class Dictionary:
     def __init__(self):
         self.dict = {}
+        self.tokens = []
 
     def add(self, token, doc, position):
         if token not in self.dict:
             self.dict[token] = {doc: [position]}
+            self.tokens.append(token)
         else:
             if doc in self.dict[token]:
                 self.dict[token][doc] += [position]

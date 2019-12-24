@@ -5,8 +5,8 @@ from tokenizing.normalizer import Normalizer
 
 
 class Tokenizer:
-    def __init__(self, matches_path):
-        self.stemmer = Stemmer()
+    def __init__(self, matches_path, exceptions_path):
+        self.stemmer = Stemmer(exceptions_path)
         self.matcher = Matcher(matches_path)
         self.normalizer = Normalizer()
 
@@ -21,5 +21,5 @@ class Tokenizer:
 
 
 if __name__ == '__main__':
-    tokenizer = Tokenizer('../matches.json')
+    tokenizer = Tokenizer('../matches.json', '../exceptions.txt')
     print(tokenizer.tokenize("سلام طهران، می خواهیم تست کنیم!"))
