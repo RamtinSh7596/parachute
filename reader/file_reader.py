@@ -23,7 +23,6 @@ class FileReader:
             for token in tokens:
                 self.dict.add(token, article.Index, pos)
                 pos += 1
-        print("Start...")
 
     def get(self, keys):
         for key in keys:

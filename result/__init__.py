@@ -24,10 +24,10 @@ def tf_idf(dictionary, size, tokens, document=None):
                 term_frequency = len(dictionary.get(token)[document])
             except KeyError:
                 term_frequency = 0
-        if term_frequency == 0:
+        document_frequency = len(dictionary.get(token))
+        if term_frequency == 0 or document_frequency == 0:
             yield 0
             continue
-        document_frequency = len(dictionary.get(token))
         tf = 1 + log10(term_frequency)
         idf = log10(size / document_frequency)
         yield tf * idf
