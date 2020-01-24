@@ -29,7 +29,7 @@ class FileReader:
         # calc documents tf-idf
         self.tf_idfs = []
         for article in self.articles:
-            self.tf_idfs.append(list(tf_idf(self.dict, len(self.articles), document=article.Index)))
+            self.tf_idfs.append(tf_idf(self.dict, len(self.articles), document=article.Index))
 
     def get(self, keys):
         for key in keys:
@@ -54,7 +54,7 @@ class FileReader:
 
         results = []
         # a = list(tf_idf(self.dict, len(self.articles), query_tokens))
-        a = list(tf_idf(self.dict, len(self.articles), tokens=query_tokens))
+        a = tf_idf(self.dict, len(self.articles), tokens=query_tokens)
         for d in final:
             # b = list(tf_idf(self.dict, len(self.articles), query_tokens, d))
             # similarity = cosine_similarity(a, b)
