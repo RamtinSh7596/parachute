@@ -15,15 +15,18 @@ def cosine_similarity(a, b):
     return similarity
 
 
-def tf_idf(dictionary, size, tokens, document=None):
-    for token in tokens:
-        if document is None:
+def tf_idf(dictionary, size, tokens=None, document=None):
+    for token in dictionary.tokens:
+        if tokens is not None:
             term_frequency = tokens.count(token)
-        else:
+        elif document is not None:
             try:
                 term_frequency = len(dictionary.get(token)[document])
             except KeyError:
                 term_frequency = 0
+        else:
+            yield 0
+            continue
         document_frequency = len(dictionary.get(token))
         if term_frequency == 0 or document_frequency == 0:
             yield 0

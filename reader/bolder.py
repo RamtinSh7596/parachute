@@ -6,5 +6,5 @@ class Bolder:
 
     def bold(self, text, words):
         for word in words:
-            text = text.replace(word, self._format.format(word))
+            text = text.replace(' ' + word + ' ', self._format.format(word))
         return text
